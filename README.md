@@ -108,7 +108,7 @@ If you need to run them manually (e.g., for local development without Docker):
 brew install golang-migrate
 
 # Run migrations
-migrate -path backend/migrations -database "postgres://taskflow:taskflow_secret@localhost:5432/taskflow?sslmode=disable" up
+migrate -path backend/migrations -database "postgres://taskflow:tf_secure_db_pass_2026@localhost:5432/taskflow?sslmode=disable" up
 
 # Roll back one step
 migrate -path backend/migrations -database "postgres://..." down 1
@@ -198,12 +198,12 @@ cd backend
 # Start postgres for testing
 docker run -d --name taskflow-test-db \
   -e POSTGRES_USER=taskflow \
-  -e POSTGRES_PASSWORD=taskflow_secret \
+  -e POSTGRES_PASSWORD=tf_secure_db_pass_2026 \
   -e POSTGRES_DB=taskflow_test \
   -p 5433:5432 postgres:16-alpine
 
 # Run integration tests
-TEST_DATABASE_URL="postgres://taskflow:taskflow_secret@localhost:5433/taskflow_test?sslmode=disable" \
+TEST_DATABASE_URL="postgres://taskflow:tf_secure_db_pass_2026@localhost:5433/taskflow_test?sslmode=disable" \
   go test -tags integration -v ./tests/...
 ```
 
